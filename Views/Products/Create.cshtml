@@ -1,0 +1,69 @@
+﻿@model _39eertime_.Models.Product
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Product</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Distributor" class="control-label"></label>
+                <input asp-for="Distributor" class="form-control" />
+                <span asp-validation-for="Distributor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Quantity_Available" class="control-label"></label>
+                <input asp-for="Quantity_Available" id="quantityAvailable" class="form-control" oninput="calculateQuantityRequired()" />
+                <span asp-validation-for="Quantity_Available" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Monthly_Amount" class="control-label"></label>
+                <input asp-for="Monthly_Amount" id="monthlyAmount" class="form-control" oninput="calculateQuantityRequired()" />
+                <span asp-validation-for="Monthly_Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Quantity_Required" class="control-label"></label>
+                <input asp-for="Quantity_Required" id="quantityRequired" class="form-control" readonly />
+                <span asp-validation-for="Quantity_Required" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+               function calculateQuantityRequired() {
+                   // Get the values of Quantity_Available and Monthly_Amount
+
+                   const monthlyAmount = parseFloat(document.getElementById('monthlyAmount').value) || 0;
+        const quantityAvailable = parseFloat(document.getElementById('quantityAvailable').value) || 0;
+                   // Calculate Quantity_Required
+                   const quantityRequired = monthlyAmount  - quantityAvailable;
+
+                   // Set the value of Quantity_Required
+                   document.getElementById('quantityRequired').value = quantityRequired;
+               }
+    </script>
+}

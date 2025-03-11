@@ -1,0 +1,159 @@
+﻿@model IEnumerable<_39eertime_.Models.Product>
+@{
+    ViewData["Title"] = "";
+}
+
+<style>
+
+    /* Set the background color of the page to red */
+
+    /* Add margin between the search bar, buttons, and "Create New" button */
+    .search-container {
+        margin-bottom: 20px;
+        width: 40%
+    }
+
+        .search-container .form-group {
+            margin-bottom: 10px;
+        }
+
+        .search-container .btn {
+            margin-right: 10px;
+        }
+
+    .create-new-button {
+        margin-top: 20px;
+    }
+
+    /* Custom yellow buttons */
+    .btn-yellow {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: black; /* Text color */
+    }
+
+        .btn-yellow:hover {
+            background-color: #007bff; /* Darker yellow on hover */
+            border-color: #007bff;
+        }
+</style>
+
+<h1 style="text-align:center">The Storage</h1>
+
+<!-- Search Bar -->
+<div class="search-container">
+    <form asp-action="Index" method="get">
+        <div class="form-group">
+            <label style="  color : white ; font-size:larger" for="searchString"><b>Search:</b></label>
+            <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label style=" color : white ; font-size:larger" for="searchOption"><b>Search By:</b></label>
+            <select name="searchOption" class="form-control">
+                <option value="Distributor" selected="@(ViewData["SearchOption"]?.ToString() == "Distributor")">Distributor</option>
+                <option value="Quantity_Available" selected="@(ViewData["SearchOption"]?.ToString() == "Quantity_Available")">Quantity Available</option>
+                <option value="Name" selected="@(ViewData["SearchOption"]?.ToString() == "Name")">Name</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-yellow">Search</button>
+        <a asp-action="Index" class="btn btn-yellow">Clear</a>
+    </form>
+</div>
+
+<!-- Create New Button -->
+<div class="create-new-button">
+    <a asp-action="Create" class="btn btn-success">Create New</a>
+</div>
+<div style="position: relative;">
+</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Distributor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity_Available)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Monthly_Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity_Required)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody style="color:white ;  font-size:large ; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Distributor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity_Available)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Monthly_Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity_Required)
+                </td>
+                <td>
+                    <a style="background-color: #007bff;
+
+color: white;
+
+border: none;
+
+padding: 5px 10px;
+
+border-radius: 5px;
+
+cursor: pointer;
+
+margin-right: auto;
+        " asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a style="background-color: lime;
+
+color: white;
+
+border: none;
+
+padding: 5px 10px;
+
+border-radius: 5px;
+
+cursor: pointer;
+
+margin-right: auto;
+        " asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a style="background-color: red;
+
+color: white;
+
+border: none;
+
+padding: 5px 10px;
+
+border-radius: 5px;
+
+cursor: pointer;
+
+margin-right:auto;
+        " asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
